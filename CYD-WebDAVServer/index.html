@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CYD JSON Notes</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #17202a;
+            --muted: #63727a;
+            --accent: #176b87;
+            --accent-dark: #0f4d63;
+            --paper: #ffffff;
+            --line: #d7e0e4;
+            --background: #eef3f5;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            max-width: 48rem;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            color: var(--ink);
+            background: var(--background);
+            font: 1rem/1.5 system-ui, sans-serif;
+        }
+
+        main {
+            padding: 1.5rem;
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(23, 32, 42, 0.08);
+        }
+
+        h1 { margin-top: 0; color: var(--accent); }
+        label { display: block; margin-top: 1rem; font-weight: 600; }
+        input, textarea {
+            display: block;
+            width: 100%;
+            margin-top: 0.35rem;
+            padding: 0.7rem;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            color: var(--ink);
+            font: inherit;
+        }
+        textarea { min-height: 9rem; resize: vertical; }
+        button {
+            margin-top: 1.25rem;
+            padding: 0.7rem 1rem;
+            border: 0;
+            border-radius: 4px;
+            color: white;
+            background: var(--accent);
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        button:hover { background: var(--accent-dark); }
+        button:disabled { cursor: wait; opacity: 0.65; }
+        #status { min-height: 1.5rem; color: var(--muted); }
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .section-heading h2 { margin: 0; font-size: 1.25rem; }
+        .refresh-button {
+            margin-top: 0;
+            padding: 0.45rem 0.7rem;
+            font-size: 0.9rem;
+        }
+        #data-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            border-top: 1px solid var(--line);
+        }
+        #data-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .record-heading { margin: 0 0 0.5rem; color: var(--accent-dark); }
+        .record-fields { margin: 0; }
+        .record-fields div { display: grid; grid-template-columns: minmax(7rem, 30%) 1fr; gap: 1rem; padding: 0.25rem 0; }
+        .record-fields dt { font-weight: 700; }
+        .record-fields dd { margin: 0; overflow-wrap: anywhere; }
+        .empty-data { color: var(--muted); }
+        pre {
+            overflow-x: auto;
+            padding: 1rem;
+            color: #eaf7fb;
+            background: #17202a;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>CYD JSON Notes</h1>
+        <p>Enter a note and save it to <strong>form-data.json</strong> on the server storage.</p>
+
+        <form id="note-form">
+            <label for="name">Name</label>
+            <input id="name" name="name" required maxlength="80" autocomplete="name">
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required maxlength="2000"></textarea>
+
+            <button id="save-button" type="submit">Save JSON</button>
+        </form>
+
+        <p id="status" role="status" aria-live="polite"></p>
+
+        <section aria-labelledby="existing-data-heading">
+            <div class="section-heading">
+                <h2 id="existing-data-heading">Existing data</h2>
+                <button id="refresh-button" class="refresh-button" type="button">Refresh</button>
+            </div>
+            <p id="data-status" class="empty-data">Loading...</p>
+            <ul id="data-list"></ul>
+        </section>
+
+        <details>
+            <summary>JSON preview</summary>
+            <pre id="preview">No data saved yet.</pre>
+        </details>
+    </main>
+
+    <script>
+        const form = document.querySelector('#note-form');
+        const saveButton = document.querySelector('#save-button');
+        const refreshButton = document.querySelector('#refresh-button');
+        const status = document.querySelector('#status');
+        const dataStatus = document.querySelector('#data-status');
+        const dataList = document.querySelector('#data-list');
+        const preview = document.querySelector('#preview');
+        const dataPath = 'form-data.json';
+
+        function normalizeRecords(data) {
+            if (Array.isArray(data)) return data.filter((record) => record && typeof record === 'object');
+            if (data && typeof data === 'object') return [data];
+            return [];
+        }
+
+        function displayExistingData(data) {
+            const records = normalizeRecords(data);
+            dataList.replaceChildren();
+
+            if (records.length === 0) {
+                dataStatus.textContent = `No records are stored in ${dataPath}.`;
+                return;
+            }
+
+            records.forEach((record, index) => {
+                const item = document.createElement('li');
+                const heading = document.createElement('h3');
+                const fields = document.createElement('dl');
+                heading.className = 'record-heading';
+                fields.className = 'record-fields';
+                heading.textContent = `Record ${index + 1}`;
+
+                for (const [key, value] of Object.entries(record)) {
+                    const field = document.createElement('div');
+                    const label = document.createElement('dt');
+                    const content = document.createElement('dd');
+                    label.textContent = key;
+                    content.textContent = typeof value === 'object' ? JSON.stringify(value) : String(value);
+                    field.append(label, content);
+                    fields.append(field);
+                }
+
+                item.append(heading, fields);
+                dataList.append(item);
+            });
+
+            dataStatus.textContent = `Loaded ${records.length} record${records.length === 1 ? '' : 's'} from ${dataPath}.`;
+            preview.textContent = JSON.stringify(records, null, 2);
+
+            const latest = records[records.length - 1];
+            if (typeof latest.name === 'string') form.elements.name.value = latest.name;
+            if (typeof latest.message === 'string') form.elements.message.value = latest.message;
+        }
+
+        async function readExistingData() {
+            const response = await fetch(`${dataPath}?t=${Date.now()}`, { cache: 'no-store' });
+            if (response.status === 404) return [];
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return normalizeRecords(await response.json());
+        }
+
+        async function loadExistingData() {
+            refreshButton.disabled = true;
+            dataStatus.textContent = 'Loading...';
+
+            try {
+                displayExistingData(await readExistingData());
+            } catch (error) {
+                dataList.replaceChildren();
+                dataStatus.textContent = `Could not load existing data: ${error.message}.`;
+            } finally {
+                refreshButton.disabled = false;
+            }
+        }
+
+        refreshButton.addEventListener('click', loadExistingData);
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            saveButton.disabled = true;
+            status.textContent = 'Saving...';
+
+            const data = {
+                name: form.elements.name.value.trim(),
+                message: form.elements.message.value.trim(),
+                savedAt: new Date().toISOString()
+            };
+            try {
+                const records = await readExistingData();
+                records.push(data);
+                const json = JSON.stringify(records, null, 2) + '\n';
+                const response = await fetch(dataPath, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: json
+                });
+
+                if (!response.ok && response.status !== 201 && response.status !== 204) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                status.textContent = `Saved to ${dataPath}.`;
+                displayExistingData(records);
+            } catch (error) {
+                status.textContent = `Save failed: ${error.message}. Check the WebDAV login and connection.`;
+            } finally {
+                saveButton.disabled = false;
+            }
+        });
+
+        loadExistingData();
+    </script>
+</body>
+</html>
