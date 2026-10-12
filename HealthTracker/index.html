@@ -1,0 +1,452 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" href="data:," />
+    <title>Health Tracker</title>
+    <style>
+      body {
+        margin: 0;
+        background: #f2f6f7;
+        color: #17202a;
+        font:
+          16px system-ui,
+          sans-serif;
+      }
+      header {
+        background: #123047;
+        color: #fff;
+        padding: 18px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+      main {
+        max-width: 1050px;
+        margin: auto;
+        padding: 16px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .card {
+        background: #fff;
+        border: 1px solid #d5e0e4;
+        border-radius: 12px;
+        padding: 16px;
+      }
+      h2 {
+        margin: 0 0 10px;
+        font-size: 1.12rem;
+      }
+      label {
+        display: block;
+        font-weight: 700;
+        font-size: 0.88rem;
+        margin: 9px 0 4px;
+      }
+      input,
+      textarea,
+      button {
+        font: inherit;
+      }
+      input,
+      textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px;
+        border: 1px solid #b8c7cd;
+        border-radius: 7px;
+      }
+      textarea {
+        min-height: 72px;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .three {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      button {
+        border: 0;
+        border-radius: 7px;
+        padding: 10px 13px;
+        background: #176b87;
+        color: #fff;
+        font-weight: 700;
+        cursor: pointer;
+        margin: 12px 6px 0 0;
+      }
+      .alt {
+        background: #e8f0f3;
+        color: #17455b;
+      }
+      .bad {
+        background: #a43d3d;
+      }
+      .note {
+        font-size: 0.86rem;
+        color: #61717a;
+      }
+      .error {
+        display: none;
+        background: #fff4df;
+        color: #805000;
+        padding: 10px;
+        border-radius: 7px;
+        margin-top: 10px;
+      }
+      .error.show {
+        display: block;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+      th,
+      td {
+        padding: 8px 5px;
+        border-bottom: 1px solid #d5e0e4;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        font-size: 0.72rem;
+        color: #61717a;
+      }
+      @media (max-width: 720px) {
+        main {
+          grid-template-columns: 1fr;
+          padding: 10px;
+        }
+        .row,
+        .three {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Health Tracker</h1>
+      <div class="note" style="color: #c7dce5">
+        Personal tracking only - not medical advice
+      </div>
+    </header>
+    <main>
+      <section class="card">
+        <h2>New entry</h2>
+        <p class="note">
+          All fields are optional. Enter at least one value or note to save.
+        </p>
+        <form id="entryForm">
+          <div class="row">
+            <div>
+              <label>Date and time</label
+              ><input id="when" type="datetime-local" required />
+            </div>
+            <div>
+              <label>Height in inches (saved locally)</label
+              ><input id="height" type="number" step=".1" min="1" />
+            </div>
+          </div>
+          <div class="row three">
+            <div>
+              <label>Weight (lb)</label
+              ><input id="weight" type="number" step=".1" min="1" />
+            </div>
+            <div><label>BMI</label><input id="bmi" readonly /></div>
+            <div>
+              <label>Resting pulse</label
+              ><input id="pulse" type="number" min="1" />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label>Systolic BP</label><input id="sys" type="number" min="1" />
+            </div>
+            <div>
+              <label>Diastolic BP</label
+              ><input id="dia" type="number" min="1" />
+            </div>
+          </div>
+          <div class="row three">
+            <div>
+              <label>Walk minutes</label
+              ><input id="walk" type="number" min="0" />
+            </div>
+            <div>
+              <label>Workout minutes</label
+              ><input id="workout" type="number" min="0" />
+            </div>
+            <div>
+              <label>Sleep hours</label
+              ><input id="sleep" type="number" min="0" step=".1" />
+            </div>
+          </div>
+          <label>Notes</label><textarea id="notes"></textarea>
+          <div id="error" class="error"></div>
+          <button>Save entry</button
+          ><button type="button" class="alt" id="new">New entry</button
+          ><button type="button" class="bad" id="remove" style="display: none">
+            Delete entry
+          </button>
+        </form>
+      </section>
+      <section class="card">
+        <h2>History</h2>
+        <p id="summary" class="note"></p>
+        <button class="alt" id="export">Export JSON</button
+        ><button class="alt" id="import">Import</button
+        ><input
+          id="file"
+          type="file"
+          accept="application/json"
+          style="display: none"
+        />
+        <div id="list"></div>
+      </section>
+    </main>
+    <script>
+      (function () {
+        var K = "cyd.health.compat.v1",
+          H = "cyd.health.compat.height",
+          $ = function (id) {
+            return document.getElementById(id);
+          },
+          data = read(),
+          edit = null;
+        function read() {
+          try {
+            return JSON.parse(localStorage.getItem(K)) || [];
+          } catch (e) {
+            return [];
+          }
+        }
+        function id() {
+          if (window.crypto && typeof window.crypto.randomUUID === "function") {
+            return window.crypto.randomUUID();
+          }
+          return (
+            Date.now().toString(36) +
+            "-" +
+            Math.random().toString(36).slice(2, 11)
+          );
+        }
+        function value(n) {
+          return $(n).value.trim();
+        }
+        function num(n) {
+          var x = value(n);
+          return x === "" ? null : Number(x);
+        }
+        function esc(s) {
+          return String(s || "").replace(/[&<>]/g, function (c) {
+            return c === "&" ? "&amp;" : c === "<" ? "&lt;" : "&gt;";
+          });
+        }
+        function reset() {
+          edit = null;
+          $("entryForm").reset();
+          $("when").value = new Date(
+            Date.now() - new Date().getTimezoneOffset() * 60000,
+          )
+            .toISOString()
+            .slice(0, 16);
+          $("height").value = localStorage.getItem(H) || "";
+          $("bmi").value = "";
+          $("remove").style.display = "none";
+          $("error").className = "error";
+        }
+        function calc() {
+          var w = num("weight"),
+            h = num("height");
+          $("bmi").value = w && h ? ((w * 703) / (h * h)).toFixed(1) : "";
+        }
+        function draw() {
+          data.sort(function (a, b) {
+            return b.when.localeCompare(a.when);
+          });
+          $("summary").textContent =
+            data.length + " saved entr" + (data.length === 1 ? "y" : "ies");
+          $("list").innerHTML = data.length
+            ? "<table><tr><th>Date</th><th>Weight/BMI</th><th>BP/Pulse</th><th>Activity</th><th>Notes</th></tr>" +
+              data
+                .map(function (r) {
+                  return (
+                    '<tr data-id="' +
+                    r.id +
+                    '"><td>' +
+                    new Date(r.when).toLocaleString() +
+                    "</td><td>" +
+                    (r.weight == null ? "—" : r.weight + " lb") +
+                    (r.bmi ? " / " + r.bmi : "") +
+                    "</td><td>" +
+                    (r.sys == null ? "—" : r.sys) +
+                    "/" +
+                    (r.dia == null ? "—" : r.dia) +
+                    (r.pulse == null ? "" : " · " + r.pulse) +
+                    "</td><td>" +
+                    (r.walk == null ? "" : "Walk " + r.walk + "m ") +
+                    (r.workout == null ? "" : "Work " + r.workout + "m ") +
+                    (r.sleep == null ? "" : "Sleep " + r.sleep + "h") +
+                    "</td><td>" +
+                    esc(r.notes) +
+                    "</td></tr>"
+                  );
+                })
+                .join("") +
+              "</table>"
+            : '<p class="note">No saved entries yet.</p>';
+          Array.prototype.forEach.call(
+            document.querySelectorAll("tr[data-id]"),
+            function (row) {
+              row.onclick = function () {
+                show(
+                  data.filter(function (x) {
+                    return x.id === row.getAttribute("data-id");
+                  })[0],
+                );
+              };
+            },
+          );
+        }
+        function show(r) {
+          edit = r.id;
+          [
+            "when",
+            "weight",
+            "pulse",
+            "sys",
+            "dia",
+            "walk",
+            "workout",
+            "sleep",
+            "notes",
+          ].forEach(function (n) {
+            $(n).value = r[n] == null ? "" : r[n];
+          });
+          $("height").value = localStorage.getItem(H) || "";
+          $("bmi").value = r.bmi || "";
+          $("remove").style.display = "inline-block";
+          window.scrollTo(0, 0);
+        }
+        $("weight").oninput = calc;
+        $("height").oninput = function () {
+          localStorage.setItem(H, value("height"));
+          calc();
+        };
+        $("entryForm").onsubmit = function (e) {
+          e.preventDefault();
+          var names = [
+              "height",
+              "weight",
+              "pulse",
+              "sys",
+              "dia",
+              "walk",
+              "workout",
+              "sleep",
+              "notes",
+            ],
+            has = names.some(function (n) {
+              return value(n) !== "";
+            });
+          if (!has) {
+            $("error").textContent =
+              "Enter at least one value or note before saving.";
+            $("error").className = "error show";
+            return;
+          }
+          var r = {
+            when: value("when"),
+            weight: num("weight"),
+            bmi: value("bmi") || null,
+            pulse: num("pulse"),
+            sys: num("sys"),
+            dia: num("dia"),
+            walk: num("walk"),
+            workout: num("workout"),
+            sleep: num("sleep"),
+            notes: value("notes"),
+          };
+          if ((r.sys == null) !== (r.dia == null)) {
+            $("error").textContent =
+              "Enter both systolic and diastolic for blood pressure.";
+            $("error").className = "error show";
+            return;
+          }
+          if (edit) {
+            data.forEach(function (x) {
+              if (x.id === edit) Object.assign(x, r);
+            });
+          } else {
+            r.id = id();
+            data.push(r);
+          }
+          localStorage.setItem(K, JSON.stringify(data));
+          draw();
+          reset();
+        };
+        $("new").onclick = reset;
+        $("remove").onclick = function () {
+          if (edit && confirm("Delete this entry?")) {
+            data = data.filter(function (x) {
+              return x.id !== edit;
+            });
+            localStorage.setItem(K, JSON.stringify(data));
+            draw();
+            reset();
+          }
+        };
+        $("export").onclick = function () {
+          var a = document.createElement("a"),
+            b = new Blob(
+              [
+                JSON.stringify(
+                  { entries: data, height: localStorage.getItem(H) },
+                  null,
+                  2,
+                ),
+              ],
+              { type: "application/json" },
+            );
+          a.href = URL.createObjectURL(b);
+          a.download = "health-tracker-backup.json";
+          a.click();
+        };
+        $("import").onclick = function () {
+          $("file").click();
+        };
+        $("file").onchange = function (e) {
+          var f = e.target.files[0],
+            r = new FileReader();
+          if (!f) return;
+          r.onload = function () {
+            try {
+              var x = JSON.parse(r.result);
+              if (!Array.isArray(x.entries)) throw 0;
+              if (confirm("Replace current entries?")) {
+                data = x.entries;
+                localStorage.setItem(K, JSON.stringify(data));
+                if (x.height) localStorage.setItem(H, x.height);
+                draw();
+                reset();
+              }
+            } catch (z) {
+              alert("Invalid backup file.");
+            }
+          };
+          r.readAsText(f);
+        };
+        reset();
+        draw();
+      })();
+    </script>
+  </body>
+</html>

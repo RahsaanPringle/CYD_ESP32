@@ -206,6 +206,20 @@ const char* contentTypeFor(const String& fileName) {
   return "application/octet-stream";
 }
 
+const char* listingIconFor(const String& fileName, bool isDirectory) {
+  if (isDirectory) return "&#128193;";
+
+  String lowerName = fileName;
+  lowerName.toLowerCase();
+  if (lowerName.endsWith(".jpg") || lowerName.endsWith(".jpeg") || lowerName.endsWith(".png") || lowerName.endsWith(".gif") || lowerName.endsWith(".webp") || lowerName.endsWith(".svg")) return "&#128444;";
+  if (lowerName.endsWith(".mp3") || lowerName.endsWith(".wav") || lowerName.endsWith(".ogg") || lowerName.endsWith(".m4a")) return "&#127925;";
+  if (lowerName.endsWith(".mp4") || lowerName.endsWith(".mov") || lowerName.endsWith(".avi") || lowerName.endsWith(".mkv") || lowerName.endsWith(".webm")) return "&#127909;";
+  if (lowerName.endsWith(".zip") || lowerName.endsWith(".rar") || lowerName.endsWith(".7z") || lowerName.endsWith(".gz") || lowerName.endsWith(".tar")) return "&#128230;";
+  if (lowerName.endsWith(".html") || lowerName.endsWith(".htm") || lowerName.endsWith(".css") || lowerName.endsWith(".js") || lowerName.endsWith(".json") || lowerName.endsWith(".ino") || lowerName.endsWith(".cpp") || lowerName.endsWith(".h")) return "&#128187;";
+  if (lowerName.endsWith(".txt") || lowerName.endsWith(".md") || lowerName.endsWith(".pdf") || lowerName.endsWith(".doc") || lowerName.endsWith(".docx")) return "&#128196;";
+  return "&#128196;";
+}
+
 void sendResponse(WiFiClient& client, int code, const String& status, const String& contentType, const String& body, const String& extraHeaders = "") {
   client.print("HTTP/1.1 ");
   client.print(code);
@@ -340,7 +354,7 @@ void handleGet(WiFiClient& client, const HttpRequest& request, bool headersOnly)
   }
 
   if (target.isDirectory()) {
-    String page = F("<!doctype html><html><head><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>CYD WebDAV</title><style>body{font-family:system-ui,sans-serif;max-width:760px;margin:0 auto;padding:24px;background:#eef3f5;color:#17202a}main{background:white;border:1px solid #d7e0e4;border-radius:8px;padding:24px}a{color:#176b87;overflow-wrap:anywhere}li{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:10px 0}.meta{color:#63727a}.delete{background:#a43d3d;color:#fff;border:0;border-radius:4px;padding:6px 10px;cursor:pointer}</style></head><body><main><h1>CYD WebDAV</h1><p>WebDAV: <strong>/</strong></p><p>User: <strong>cyd</strong> Password: <strong>upload</strong></p><ul>");
+    String page = F("<!doctype html><html><head><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>CYD WebDAV</title><style>body{font-family:system-ui,sans-serif;max-width:760px;margin:0 auto;padding:24px;background:#eef3f5;color:#17202a}main{background:white;border:1px solid #d7e0e4;border-radius:8px;padding:24px}a{color:#176b87;overflow-wrap:anywhere}li{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:10px 0}.icon{display:inline-block;width:1.5em;text-align:center}.meta{color:#63727a}.delete{background:#a43d3d;color:#fff;border:0;border-radius:4px;padding:6px 10px;cursor:pointer}</style></head><body><main><h1>CYD WebDAV</h1><p>WebDAV: <strong>/</strong></p><p>User: <strong>cyd</strong> Password: <strong>upload</strong></p><ul>");
     File entry = target.openNextFile();
     while (entry) {
       const String childName = baseName(String(entry.name()));
@@ -348,7 +362,9 @@ void handleGet(WiFiClient& client, const HttpRequest& request, bool headersOnly)
       const String childHref = webDavHref(childPath, entry.isDirectory());
       page += F("<li><div><a href=\"");
       page += childHref;
-      page += F("\">");
+      page += F("\"><span class=\"icon\" aria-hidden=\"true\">");
+      page += listingIconFor(childName, entry.isDirectory());
+      page += F("</span>");
       page += xmlEscape(childName);
       if (entry.isDirectory()) page += F("/");
       page += F("</a>");

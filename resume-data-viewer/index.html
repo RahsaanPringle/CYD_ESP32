@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resume Data Viewer</title>
+  <style>
+    :root {
+      --ink: #18232d;
+      --muted: #60707d;
+      --paper: #fbfaf7;
+      --panel: #ffffff;
+      --line: #d9e0e3;
+      --accent: #c65335;
+      --accent-dark: #873b2b;
+      --mint: #e2f0e9;
+      --blue: #e6eef4;
+      --gold: #f5ead0;
+      --shadow: 0 16px 40px rgba(29, 42, 50, .10);
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: #e9eeeb; font: 15px/1.55 Georgia, 'Times New Roman', serif; }
+    button, input { font: inherit; }
+    a { color: var(--accent-dark); }
+    .shell { max-width: 1240px; margin: 0 auto; padding: 28px 20px 60px; }
+    .masthead { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 24px; }
+    .eyebrow { margin: 0 0 6px; color: var(--accent); font: 700 12px/1.2 system-ui, sans-serif; letter-spacing: .16em; text-transform: uppercase; }
+    h1, h2, h3 { margin: 0; font-family: Georgia, 'Times New Roman', serif; line-height: 1.15; }
+    h1 { max-width: 760px; font-size: clamp(2.2rem, 5vw, 4.5rem); letter-spacing: -.045em; }
+    h2 { font-size: 1.7rem; }
+    h3 { font-size: 1.1rem; }
+    .lede { max-width: 720px; margin: 12px 0 0; color: var(--muted); font-size: 1.08rem; }
+    .toolbar { display: flex; align-items: center; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
+    .button, .file-label { border: 1px solid var(--ink); border-radius: 4px; padding: 9px 13px; color: var(--paper); background: var(--ink); cursor: pointer; font: 700 12px/1 system-ui, sans-serif; letter-spacing: .04em; }
+    .button.secondary, .file-label { color: var(--ink); background: transparent; }
+    .button:hover, .file-label:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+    #file-input { display: none; }
+    .status { margin: 0 0 20px; padding: 10px 14px; border-left: 4px solid var(--accent); color: var(--muted); background: var(--paper); font: 13px/1.4 system-ui, sans-serif; }
+    .status.error { color: #8d241d; background: #f9e8e4; }
+    .hero, .section { padding: 30px; background: var(--paper); box-shadow: var(--shadow); }
+    .hero { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; align-items: end; margin-bottom: 22px; border-top: 8px solid var(--accent); }
+    .contact { display: flex; gap: 6px 14px; flex-wrap: wrap; margin-top: 20px; color: var(--muted); font: 13px/1.4 system-ui, sans-serif; }
+    .contact a { color: inherit; }
+    .contact span::after { content: ' /'; margin-left: 14px; color: #b3bfbe; }
+    .contact span:last-child::after { content: ''; margin: 0; }
+    .identity-note { padding: 18px; background: var(--mint); border-left: 4px solid #4d8b70; }
+    .identity-note strong { display: block; margin-bottom: 5px; font: 700 12px/1.2 system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 22px; }
+    .section { grid-column: span 12; }
+    .section.half { grid-column: span 6; }
+    .section-header { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; padding-bottom: 12px; margin-bottom: 20px; border-bottom: 1px solid var(--line); }
+    .section-header small { color: var(--muted); font: 12px system-ui, sans-serif; }
+    .summary { max-width: 850px; margin: 0; font-size: 1.15rem; }
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill { padding: 5px 9px; border-radius: 999px; color: #274d43; background: var(--mint); font: 12px/1.2 system-ui, sans-serif; }
+    .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+    .skill-group { padding: 16px; background: var(--blue); }
+    .skill-group h3 { margin-bottom: 10px; font-size: 1rem; }
+    .skill-group .pills { gap: 5px; }
+    .skill-group .pill { color: #274558; background: #fff; border: 1px solid #cad9e2; border-radius: 3px; }
+    .timeline { display: grid; gap: 18px; }
+    .job { position: relative; padding: 0 0 18px 22px; border-left: 2px solid var(--line); }
+    .job::before { content: ''; position: absolute; top: 4px; left: -6px; width: 9px; height: 9px; border: 2px solid var(--accent); border-radius: 50%; background: var(--paper); }
+    .job:last-child { padding-bottom: 0; }
+    .job h3 { color: var(--accent-dark); }
+    .meta { display: flex; gap: 8px 18px; flex-wrap: wrap; margin: 5px 0 9px; color: var(--muted); font: 12px/1.35 system-ui, sans-serif; }
+    .job ul, .clean-list { margin: 8px 0 0; padding-left: 20px; }
+    .job li, .clean-list li { margin: 4px 0; }
+    .job .pills { margin-top: 10px; }
+    .card-list { display: grid; gap: 13px; }
+    .card { padding: 15px; border: 1px solid var(--line); background: #fff; }
+    .card h3 { margin-bottom: 4px; }
+    .card p { margin: 7px 0 0; }
+    .card .meta { margin-bottom: 0; }
+    .warn { border-left: 4px solid #c18b2c; background: var(--gold); }
+    .priority { display: inline-block; margin-bottom: 7px; color: var(--accent-dark); font: 700 11px/1 system-ui, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+    .empty { color: var(--muted); }
+    footer { padding: 18px 0 0; color: var(--muted); font: 12px system-ui, sans-serif; text-align: center; }
+    @media (max-width: 780px) { .masthead, .hero { display: block; } .toolbar { justify-content: flex-start; margin-top: 18px; } .hero, .section { padding: 22px; } .section.half { grid-column: span 12; } .identity-note { margin-top: 22px; } }
+    @media print { body { background: #fff; } .shell { max-width: none; padding: 0; } .toolbar, .status { display: none; } .hero, .section { box-shadow: none; } .section, .hero { break-inside: avoid; } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="masthead">
+      <div>
+        <p class="eyebrow">Canonical career dataset</p>
+        <h1>Resume data viewer</h1>
+        <p class="lede">A readable, source-driven view of the professional profile. The page renders the JSON rather than maintaining a second copy of the resume.</p>
+      </div>
+      <div class="toolbar">
+        <label class="file-label" for="file-input">Open JSON file</label>
+        <input id="file-input" type="file" accept="application/json,.json">
+        <button class="button secondary" type="button" id="print-button">Print / PDF</button>
+      </div>
+    </div>
+    <p class="status" id="status">Loading the career dataset...</p>
+    <div id="app"></div>
+    <footer>Source: data/rahsaan-pringle-career-dataset.json · Local viewer only</footer>
+  </main>
+  <script>
+    const dataPath = 'data/rahsaan-pringle-career-dataset.json';
+    const app = document.querySelector('#app');
+    const status = document.querySelector('#status');
+    const escapeHtml = (value) => String(value ?? '').replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
+    const formatDate = (value) => {
+      if (!value) return 'Present';
+      const [year, month, day] = value.split('-');
+      const date = new Date(Number(year), Number(month || 1) - 1, Number(day || 1));
+      return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    };
+    const list = (items, className = 'clean-list') => items?.length ? `<ul class="${className}">${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>` : '';
+    const pills = (items) => items?.length ? `<div class="pills">${items.map((item) => `<span class="pill">${escapeHtml(item)}</span>`).join('')}</div>` : '';
+    const section = (title, body, count = '') => `<section class="section"><div class="section-header"><h2>${title}</h2>${count ? `<small>${count}</small>` : ''}</div>${body}</section>`;
+
+    function render(profile) {
+      const person = profile.person;
+      const identity = profile.professionalIdentity;
+      const contact = person.contact;
+      const jobs = profile.employment || [];
+      const skillGroups = Object.entries(profile.skills || {});
+      const websites = contact.websites || [];
+      const profiles = contact.profiles || [];
+      const email = contact.primaryEmail;
+      const phone = contact.phone;
+      const locations = person.locations?.map((location) => location.marketLabel).filter(Boolean).slice(0, 2).join(' / ');
+      const experience = jobs.map((job) => {
+        const title = job.title || job.titleProgression?.join(' → ') || 'Career engagement';
+        const employer = job.employer || job.engagement || 'Independent engagement';
+        const dates = `${formatDate(job.startDate)} – ${job.current ? 'Present' : formatDate(job.endDate)}`;
+        const context = [job.location, job.client, job.program, job.employmentType].filter(Boolean).map(escapeHtml).join(' · ');
+        const details = [...(job.responsibilities || []), ...(job.achievements || [])];
+        const warnings = [job.overlapWarning, job.endDateWarning, job.notes].filter(Boolean);
+        return `<article class="job"><h3>${escapeHtml(employer)} · ${escapeHtml(title)}</h3><div class="meta"><span>${escapeHtml(dates)}</span>${context ? `<span>${context}</span>` : ''}</div>${list(details)}${pills(job.technologies)}${warnings.length ? `<div class="card warn" style="margin-top:12px"><strong>Data note:</strong> ${warnings.map(escapeHtml).join(' ')}</div>` : ''}</article>`;
+      }).join('');
+      const skills = skillGroups.map(([name, values]) => `<div class="skill-group"><h3>${escapeHtml(name.replace(/([A-Z])/g, ' $1').replace(/^./, (letter) => letter.toUpperCase()))}</h3>${pills(values)}</div>`).join('');
+      const education = (profile.education || []).map((item) => `<article class="card"><h3>${escapeHtml(item.degree)} · ${escapeHtml(item.institution)}</h3><div class="meta"><span>${escapeHtml(item.field)}${item.concentration ? ` · ${escapeHtml(item.concentration)}` : ''}</span><span>${escapeHtml(formatDate(item.graduationDate))}</span></div></article>`).join('');
+      const certifications = (profile.certifications || []).map((item) => `<article class="card"><h3>${escapeHtml(item.name)}</h3><div class="meta"><span>${escapeHtml(item.status || 'Reported')}</span><span>${escapeHtml(formatDate(item.date))}</span>${item.verificationUrl ? `<a href="${escapeHtml(item.verificationUrl)}" target="_blank" rel="noreferrer">View credential</a>` : ''}</div>${item.verificationNotes ? `<p>${escapeHtml(item.verificationNotes)}</p>` : ''}</article>`).join('');
+      const projects = (profile.projects || []).map((item) => `<article class="card"><h3>${escapeHtml(item.name)}</h3><div class="meta"><span>${escapeHtml(item.status || 'Project')}</span>${item.repository ? `<a href="${escapeHtml(item.repository)}" target="_blank" rel="noreferrer">Repository</a>` : ''}</div><p>${escapeHtml(item.description)}</p>${pills(item.technologies)}</article>`).join('');
+      const verification = (profile.verificationQueue || []).map((item) => `<article class="card warn"><span class="priority">${escapeHtml(item.priority)} priority</span><h3>${escapeHtml(item.field)}</h3><p>${escapeHtml(item.question)}</p></article>`).join('');
+      const websitesHtml = websites.map((site) => `<a href="${escapeHtml(site.url)}" target="_blank" rel="noreferrer">${escapeHtml(site.label)}</a>`).join(' · ');
+      const profilesHtml = profiles.map((profileLink) => `<a href="${escapeHtml(profileLink.url)}" target="_blank" rel="noreferrer">${escapeHtml(profileLink.platform)}</a>`).join(' · ');
+
+      app.innerHTML = `<section class="hero"><div><p class="eyebrow">${escapeHtml(identity.yearsExperience?.display || '')} · ${escapeHtml(profile.generatedOn || '')}</p><h2>${escapeHtml(person.preferredProfessionalName || person.fullName)}</h2><p class="lede">${escapeHtml(identity.headline)}</p><div class="contact"><span>${escapeHtml(locations)}</span><span><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></span><span>${escapeHtml(phone)}</span><span>${websitesHtml}</span><span>${profilesHtml}</span></div></div><aside class="identity-note"><strong>Publishing note</strong><span>${escapeHtml(profile.dataPolicy?.publicPublishingWarning?.[0] || 'Review sensitive details before publishing.')}</span></aside></section><div class="grid">${section('Professional summary', `<p class="summary">${escapeHtml(identity.summary)}</p>${pills(identity.specialties)}`)}${section('Technical skills', `<div class="skill-grid">${skills}</div>`, `${skillGroups.length} groups`)}${section('Experience', `<div class="timeline">${experience}</div>`, `${jobs.length} records`)}<section class="section half"><div class="section-header"><h2>Education</h2></div><div class="card-list">${education || '<p class="empty">No education records.</p>'}</div></section><section class="section half"><div class="section-header"><h2>Certifications</h2></div><div class="card-list">${certifications || '<p class="empty">No certification records.</p>'}</div></section>${section('Selected projects', `<div class="card-list">${projects}</div>`, `${(profile.projects || []).length} projects`)}${section('Domain experience', pills(profile.domainExperience))}${section('Notable achievements', list((profile.notableAchievements || []).map((item) => item.statement)))}${section('Verification queue', `<div class="card-list">${verification || '<p class="empty">No outstanding verification items.</p>'}</div>`, `${(profile.verificationQueue || []).length} open items`)}</div>`;
+      status.textContent = `Loaded ${profile.person?.fullName || 'career dataset'} from ${dataPath}. Use “Open JSON file” to load another compatible profile.`;
+      status.classList.remove('error');
+    }
+
+    async function loadFromPath() {
+      try {
+        const response = await fetch(dataPath);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        render(await response.json());
+      } catch (error) {
+        status.textContent = 'The browser could not fetch the JSON automatically. Choose the dataset with “Open JSON file”, or serve the folder over a local web server.';
+        status.classList.add('error');
+      }
+    }
+
+    document.querySelector('#file-input').addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try { render(JSON.parse(reader.result)); }
+        catch { status.textContent = 'That file is not valid JSON.'; status.classList.add('error'); }
+      };
+      reader.readAsText(file);
+    });
+    document.querySelector('#print-button').addEventListener('click', () => window.print());
+    loadFromPath();
+  </script>
+</body>
+</html>

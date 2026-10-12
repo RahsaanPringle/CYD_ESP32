@@ -1,0 +1,56 @@
+{
+  "candidate": "Rahsaan Pringle",
+  "location": "Moneta/Roanoke, Virginia",
+  "remotePreference": "Remote US only",
+  "onsiteRule": "Onsite or hybrid only near Moneta/Roanoke, Virginia",
+  "employmentTypes": ["W-2", "1099"],
+  "salary": {
+    "minimumBase": 130000,
+    "preferredMinimumBase": 145000,
+    "preferredMaximumBase": 175000,
+    "currency": "USD",
+    "note": "Consider higher-paying roles and competitive contract rates. Flag lower compensation."
+  },
+  "targetTitles": [
+    "Senior Software Engineer",
+    "Senior Full Stack Developer",
+    "Lead Full Stack Engineer",
+    "Senior .NET Developer",
+    "Senior React Developer",
+    "Azure Cloud Developer",
+    "Senior SharePoint Developer",
+    "Solutions Architect"
+  ],
+  "prioritySkills": [
+    "C#",
+    ".NET",
+    "ASP.NET Core",
+    "React",
+    "TypeScript",
+    "Angular",
+    "Node.js",
+    "Azure",
+    "REST APIs",
+    "SQL Server",
+    "SharePoint",
+    "Microsoft Graph"
+  ],
+  "priorityDomains": ["Federal", "Defense", "Healthcare", "Enterprise modernization"],
+  "citizenship": "U.S. Citizen",
+  "clearance": "Active Secret",
+  "scoringWeights": {
+    "fullyRemote": 25,
+    "compensation": 20,
+    "coreTechnicalMatch": 25,
+    "seniority": 10,
+    "clearanceOrFederalFit": 10,
+    "directEmployerAndFreshness": 10
+  },
+  "hardExclusions": [
+    "Relocation required",
+    "Routine onsite work outside Moneta/Roanoke",
+    "Compensation materially below target",
+    "Top Secret required with no ability to start at Secret"
+  ]
+}
+

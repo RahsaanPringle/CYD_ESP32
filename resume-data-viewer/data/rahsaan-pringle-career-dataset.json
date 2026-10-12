@@ -1,0 +1,729 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schemaVersion": "1.0.0",
+  "datasetType": "career-profile",
+  "generatedOn": "2026-09-11",
+  "dataPolicy": {
+    "purpose": "Canonical career dataset for generating resumes, portfolio pages, cover letters, and job applications.",
+    "uncertaintyHandling": "Unknown values are null. Approximate dates and conflicting facts are explicitly marked.",
+    "publicPublishingWarning": [
+      "Do not publish phone, street address, compensation, work authorization details, or clearance details without explicit approval.",
+      "Review client and project details for contractual or security restrictions before public display."
+    ]
+  },
+  "person": {
+    "fullName": "Rahsaan Pringle",
+    "preferredProfessionalName": "Rahsaan Pringle",
+    "locations": [
+      {
+        "city": "Moneta",
+        "region": "Virginia",
+        "postalCode": "24121",
+        "country": "United States",
+        "marketLabel": "Roanoke / Moneta, Virginia"
+      },
+      {
+        "city": "Roanoke",
+        "region": "Virginia",
+        "postalCode": "24018",
+        "country": "United States",
+        "marketLabel": "Roanoke, Virginia"
+      },
+      {
+        "city": "Woodbridge",
+        "region": "Virginia",
+        "postalCode": "22191",
+        "country": "United States",
+        "marketLabel": "Woodbridge, Virginia"
+      },
+      {
+        "city": "Bedford",
+        "region": "Virginia",
+        "postalCode": "24523",
+        "country": "United States",
+        "marketLabel": "Bedford, Virginia"
+      },
+      {
+        "city": "Boca Raton",
+        "region": "Florida",
+        "postalCode": "33431",
+        "country": "United States",
+        "marketLabel": "Boca Raton, Florida"
+      }
+    ],
+    "contact": {
+      "primaryEmail": "Raalnan8@gmail.com",
+      "alternateEmails": [
+        "Rahsaan.Pringle@Traxxis.net",
+        "Rahsaan.Pringle@YubTub.club"
+      ],
+      "phone": "+1-540-358-0527",
+      "websites": [
+        {
+          "label": "Portfolio",
+          "url": "https://Traxxis.net/Resume/",
+          "status": "reported"
+        },
+        {
+          "label": "Alternate portfolio",
+          "url": "https://YubTub.club/Resume/index.html",
+          "status": "reported"
+        }
+      ],
+      "profiles": [
+        {
+          "platform": "GitHub",
+          "username": "RaalnanUno",
+          "url": "https://github.com/RaalnanUno"
+        }
+      ]
+    },
+    "citizenship": "United States",
+    "workAuthorization": [
+      "United States"
+    ],
+    "clearance": {
+      "level": "Secret",
+      "status": "Active",
+      "topSecretHeld": false,
+      "notes": "Top Secret has been discussed only as eligibility or willingness to obtain; it should not be presented as held."
+    }
+  },
+  "professionalIdentity": {
+    "primaryTitles": [
+      "Senior Software Engineer",
+      "Software Developer",
+      "Full-Stack Developer",
+      "Senior SharePoint Developer"
+    ],
+    "yearsExperience": {
+      "minimum": 10,
+      "display": "10+ years"
+    },
+    "headline": "Senior Software Engineer | C#/.NET, React, TypeScript, SQL and Azure",
+    "summary": "Senior full-stack software engineer with 10+ years of experience designing, modernizing, testing, deploying, and supporting enterprise applications. Background spans C#/.NET, ASP.NET Core, React, TypeScript, Node.js, SQL Server, MySQL, secure REST APIs, Azure cloud services, CI/CD, data integrations, and legacy modernization. Experienced in healthcare, Defense Health Agency, U.S. Air Force, U.S. Army, and other security-conscious federal environments.",
+    "specialties": [
+      "Enterprise full-stack development",
+      "Backend and API development",
+      "Legacy .NET modernization",
+      "Relational database development",
+      "Cloud-hosted application delivery",
+      "DevSecOps and CI/CD",
+      "Healthcare and federal systems",
+      "SharePoint solutions",
+      "Technical troubleshooting and production support"
+    ]
+  },
+  "workPreferences": {
+    "employmentTypes": [
+      "W2",
+      "1099"
+    ],
+    "remotePreference": "Strongly preferred",
+    "onsitePolicy": "Consider onsite or hybrid work only near Roanoke/Moneta, Virginia.",
+    "relocation": false,
+    "preferredTimeZone": "Eastern Time",
+    "decisionFactors": [
+      "Remote status",
+      "Benefits",
+      "Contract stability",
+      "Paid time off",
+      "Workload"
+    ],
+    "minimumBasePayReported": 100000,
+    "minimumBasePayCurrency": "USD",
+    "compensationHistory": {
+      "valuesReported": [
+        130000,
+        145000
+      ],
+      "currency": "USD",
+      "conflict": true,
+      "public": false,
+      "notes": "Different current-compensation figures were reported in 2026; verify before using."
+    }
+  },
+  "skills": {
+    "languages": [
+      "C#",
+      "TypeScript",
+      "JavaScript",
+      "SQL",
+      "HTML",
+      "CSS"
+    ],
+    "dotnet": [
+      ".NET 8",
+      ".NET Core",
+      ".NET Framework",
+      "ASP.NET Core",
+      "ASP.NET MVC",
+      "ASP.NET Web Forms",
+      "Entity Framework Core",
+      "REST APIs",
+      "Console applications"
+    ],
+    "frontend": [
+      "React 18/19",
+      "Redux Toolkit",
+      "React Hook Form",
+      "Bootstrap 5",
+      "Material UI",
+      "KendoReact",
+      "responsive web design"
+    ],
+    "backend": [
+      "ASP.NET Core",
+      "Node.js",
+      "Express",
+      "REST",
+      "JSON",
+      "OpenAPI",
+      "Swagger",
+      "OAuth 2.0",
+      "JWT",
+      "JWKS",
+      "OIDC",
+      "claims-based authorization"
+    ],
+    "databases": [
+      "SQL Server",
+      "Azure SQL",
+      "MySQL",
+      "Redis",
+      "stored procedures",
+      "functions",
+      "tables",
+      "views",
+      "indexes",
+      "query performance troubleshooting",
+      "relational data modeling"
+    ],
+    "dataIntegration": [
+      "SSIS",
+      "ETL concepts",
+      "CSV",
+      "XML",
+      "Excel",
+      "JSON transformation",
+      "data-ingestion workflows"
+    ],
+    "cloud": [
+      "Microsoft Azure",
+      "Azure App Service",
+      "Azure SQL",
+      "Azure API Management",
+      "Azure Key Vault",
+      "Azure Functions",
+      "Azure Application Insights",
+      "AWS familiarity"
+    ],
+    "devops": [
+      "Azure DevOps Boards",
+      "Azure DevOps Repos",
+      "Azure Pipelines",
+      "Git",
+      "CI/CD",
+      "build validation",
+      "release gates",
+      "SonarQube",
+      "Docker for development and testing",
+      "Husky"
+    ],
+    "testing": [
+      "TDD",
+      "unit testing",
+      "integration testing",
+      "Jest",
+      "Vitest",
+      "React Testing Library",
+      "Supertest"
+    ],
+    "qualityTooling": [
+      "ESLint",
+      "Prettier",
+      "automated code-quality gates",
+      "code review",
+      "centralized exception handling",
+      "observability"
+    ],
+    "microsoftBusinessPlatforms": [
+      "SharePoint",
+      "SharePoint Framework",
+      "Power Apps"
+    ],
+    "desktopAndMedia": [
+      "Electron",
+      "FFmpeg",
+      "youtube-dl-exec",
+      "electron-builder"
+    ],
+    "practices": [
+      "Agile",
+      "Extreme Programming",
+      "TDD",
+      "DevSecOps",
+      "legacy modernization",
+      "secure software development",
+      "production troubleshooting",
+      "technical standards"
+    ],
+    "aiTools": [
+      "ChatGPT",
+      "OpenAI Codex",
+      "GitHub Copilot",
+      "Ollama",
+      "local large language models",
+      "AI-assisted software development"
+    ]
+  },
+  "employment": [
+    {
+      "employer": "Alpha Omega Integrations",
+      "title": "Senior SharePoint Developer",
+      "alternateTitle": "Full-Stack Developer",
+      "startDate": null,
+      "endDate": null,
+      "current": true,
+      "dateStatus": "unknown",
+      "location": "United States",
+      "workMode": null,
+      "responsibilities": [
+        "Deliver enterprise applications across C#/.NET services, secure APIs, relational-data workflows, and TypeScript/React interfaces.",
+        "Develop and maintain ASP.NET Core and Node.js APIs using OAuth 2.0/JWT security, OpenAPI documentation, validation, JSON contracts, MySQL, and Redis.",
+        "Modernize legacy ASP.NET Web Forms and .NET Framework systems alongside modern .NET services.",
+        "Build and validate data-ingestion workflows for CSV, XML, and Excel sources using cloud storage, transfer services, and database procedures."
+      ],
+      "technologies": [
+        "C#",
+        ".NET",
+        "ASP.NET Core",
+        "ASP.NET Web Forms",
+        "React",
+        "TypeScript",
+        "Node.js",
+        "OpenAPI",
+        "MySQL",
+        "Redis"
+      ],
+      "verificationNotes": [
+        "Employer and current status are user-confirmed.",
+        "LinkedIn displays Senior SharePoint Developer; recent tailored resumes use Full-Stack Developer.",
+        "Start month and year require verification."
+      ]
+    },
+    {
+      "employer": "Oneida Technical Solutions",
+      "title": "Full-Stack Developer",
+      "alternateTitle": "Software Developer",
+      "startDate": "2024-01",
+      "endDate": "2025-10-15",
+      "current": false,
+      "client": "U.S. Air Force Kessel Run",
+      "program": "Patriot Excalibur (PEX)",
+      "location": "Oneida, New York / Remote",
+      "responsibilities": [
+        "Refactored and re-platformed legacy .NET applications for Azure PaaS.",
+        "Delivered secure full-stack features using React, TypeScript, C#, .NET Core, Azure SQL, API Management, Key Vault, and Azure DevOps.",
+        "Applied automated tests, code-quality gates, CI/CD, Agile practices, and stakeholder feedback."
+      ],
+      "achievements": [
+        "Supported a mission platform used across more than 30 operational locations."
+      ],
+      "technologies": [
+        "C#",
+        ".NET Core",
+        "React",
+        "TypeScript",
+        "Azure SQL",
+        "Azure App Service",
+        "Azure API Management",
+        "Azure Key Vault",
+        "Azure DevOps",
+        "CI/CD"
+      ],
+      "separation": {
+        "type": "Layoff",
+        "noticeDate": "2025-10-02",
+        "endDate": "2025-10-15",
+        "teamAffected": 23
+      }
+    },
+    {
+      "employer": "IQVIA",
+      "title": "Software Developer",
+      "employmentType": "Contract",
+      "startDate": "2020-07",
+      "endDate": "2024-01",
+      "location": "Durham, North Carolina / Remote",
+      "clientsOrPrograms": [
+        "Defense Health Agency",
+        "Military Health System",
+        "CarePoint",
+        "TBI Patient Registry",
+        "DHA Opioid Registry"
+      ],
+      "responsibilities": [
+        "Built ASP.NET Core and React/TypeScript features for secure clinical dashboards, analytical interfaces, and registry-access tools.",
+        "Integrated Military Health System datasets using EF Core, SQL Server, secure REST APIs, OpenAPI, and JWT authentication.",
+        "Maintained CarePoint, a Defense Health Agency SharePoint business-intelligence and collaboration portal.",
+        "Troubleshot application, integration, and SQL performance issues in healthcare data workflows."
+      ],
+      "technologies": [
+        "C#",
+        "ASP.NET Core",
+        "React",
+        "TypeScript",
+        "EF Core",
+        "SQL Server",
+        "REST",
+        "OpenAPI",
+        "JWT",
+        "SharePoint",
+        "Azure App Service",
+        "Azure DevOps"
+      ]
+    },
+    {
+      "employer": "MedWand Solutions, Inc.",
+      "title": "Full-Stack .NET Developer",
+      "employmentType": "Contract",
+      "startDate": "2021-11",
+      "endDate": "2022-12",
+      "location": "Remote",
+      "overlapsWith": "IQVIA",
+      "program": "MedWand VirtualCare telehealth platform",
+      "responsibilities": [
+        "Built and maintained services supporting remote clinical examinations, clinical-grade vital signs, sensor data, and workflow integrations.",
+        "Optimized ingestion from multi-sensor devices and approved Bluetooth peripherals through platform APIs.",
+        "Partnered with clinicians, product, and QA to reproduce field issues, ship fixes, and improve deployment reliability."
+      ],
+      "technologies": [
+        "C#",
+        ".NET",
+        "REST APIs",
+        "Azure DevOps",
+        "CI/CD",
+        "Bluetooth integrations"
+      ]
+    },
+    {
+      "employer": "SAIC",
+      "title": "SharePoint Developer / Senior Biostatistician",
+      "startDate": "2018-12",
+      "endDate": "2020-12",
+      "location": "Huntsville, Alabama",
+      "responsibilities": [
+        "Developed .NET Core enterprise applications and REST APIs with EF Core and SQL Server.",
+        "Established Azure DevOps CI/CD with build validation, automated tests, gated releases, and Azure App Service deployments.",
+        "Hardened APIs with OIDC and claims, input validation, centralized exception handling, and OpenAPI documentation.",
+        "Performed SQL query tuning and application monitoring with Application Insights."
+      ],
+      "technologies": [
+        "SharePoint",
+        "C#",
+        ".NET Core",
+        "EF Core",
+        "SQL Server",
+        "REST",
+        "OIDC",
+        "OpenAPI",
+        "Azure DevOps",
+        "Azure App Service",
+        "Application Insights"
+      ]
+    },
+    {
+      "engagement": "U.S. Army Rapid Equipping Force",
+      "titleProgression": [
+        "Project Manager",
+        "Software Developer"
+      ],
+      "startDate": "2013-09",
+      "endDate": "2018-10",
+      "location": "Fort Belvoir, Virginia",
+      "contractEmployers": [
+        {
+          "employer": "Booz Allen Hamilton",
+          "title": "Project Manager",
+          "startDate": "2013-09",
+          "endDate": "2014-02",
+          "dateStatus": "approximate",
+          "achievement": "Managed a four-person application team."
+        },
+        {
+          "employer": "KT Consulting",
+          "startDate": "2014-03",
+          "endDate": "2015-06",
+          "dateStatus": "reported"
+        },
+        {
+          "employer": "TSM",
+          "startDate": "2015-03",
+          "endDate": "2016-06",
+          "dateStatus": "reported",
+          "overlapWarning": "Reported dates overlap KT Consulting from March through June 2015; verify."
+        },
+        {
+          "employer": "Xator Corporation",
+          "startDate": "2016-07",
+          "endDate": "2018-12",
+          "dateStatus": "reported",
+          "endDateWarning": "Employer end date extends beyond the grouped REF engagement end date of October 2018; verify."
+        }
+      ],
+      "notes": "Resume history groups multiple contractors under one continuous Army REF mission engagement. Preserve this grouping when continuity matters."
+    },
+    {
+      "employer": "Spin Systems",
+      "title": "Software Developer — SharePoint",
+      "startDate": "2012-10",
+      "endDate": "2013-11",
+      "location": "United States",
+      "overlapWarning": "Reported dates overlap the beginning of the Army REF/Booz Allen engagement; verify whether this represents transition or concurrent work.",
+      "technologies": [
+        "SharePoint",
+        "C#",
+        ".NET",
+        "JavaScript",
+        "SQL"
+      ]
+    },
+    {
+      "employer": "Deloitte",
+      "title": "Software Developer",
+      "startDate": "2010-03",
+      "endDate": "2012-04",
+      "location": "United States",
+      "technologies": [
+        "C#",
+        ".NET",
+        "SQL Server",
+        "web applications"
+      ]
+    },
+    {
+      "employer": "Serco, Inc.",
+      "title": "Software Developer",
+      "startDate": "2007-12",
+      "endDate": "2010-03",
+      "location": "Remote, United States",
+      "projects": [
+        "Production Reporting System"
+      ],
+      "technologies": [
+        "C#",
+        ".NET",
+        "SQL Server",
+        "reporting systems"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Kaplan University",
+      "degree": "Bachelor of Science",
+      "field": "Information Technology",
+      "concentration": "Database Administration",
+      "graduationDate": "2005-05"
+    },
+    {
+      "institution": "Virginia Western Community College",
+      "degree": "Associate of Science",
+      "field": "Information Technology",
+      "concentration": "Database Administration",
+      "graduationDate": "2002-05"
+    }
+  ],
+  "certifications": [
+    {
+      "name": "GitHub Copilot certification",
+      "status": "Passed",
+      "date": "2026-09",
+      "issuer": null,
+      "credentialId": null,
+      "verificationUrl": "https://learn.microsoft.com/api/credentials/share/en-us/RahsaanPringle-6610/2099144ABB656893?sharingId=8B98374CCDE0E75E",
+      "verificationNotes": "Official Microsoft credential verification link."
+    },
+    {
+      "name": "Microsoft Certified: Azure AI Cloud Developer Associate",
+      "status": "Pending",
+      "date": null,
+      "issuer": "Microsoft",
+      "credentialId": null,
+      "verificationUrl": "https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-cloud-developer-associate/",
+      "verificationNotes": "Planned next certification exam."
+    }
+  ],
+  "projects": [
+    {
+      "name": "Job Lead Tracker",
+      "repository": "https://github.com/RaalnanUno/JobThug",
+      "description": "React/Vite job-application dashboard with browser identity, lead and reference tracking, flexible storage, sorting, cover and follow-up letter generation, and PDF/DOCX export.",
+      "technologies": [
+        "React 19",
+        "Vite",
+        "TypeScript",
+        "Bootstrap",
+        "LocalStorage",
+        "JSON Server",
+        "DOCX"
+      ]
+    },
+    {
+      "name": "My Ollama Voice",
+      "repository": "https://github.com/RaalnanUno/my-ollama-voice",
+      "description": "Local-LLM voice interface with speech-to-text, text-to-speech, IndexedDB chat history, model fallback handling, and TypeScript tooling.",
+      "technologies": [
+        "React",
+        "Vite",
+        "TypeScript",
+        "Ollama",
+        "IndexedDB",
+        "speech APIs"
+      ]
+    },
+    {
+      "name": "YubTub",
+      "description": "Electron desktop video-downloader application and portfolio project.",
+      "repository": null,
+      "technologies": [
+        "Electron",
+        "Express",
+        "FFmpeg",
+        "youtube-dl-exec",
+        "electron-builder"
+      ]
+    },
+    {
+      "name": "Language Learning Reader",
+      "status": "Concept / planning",
+      "description": "Browser-only language-learning reader using public-domain books, consistent word replacement, and sentence-by-sentence learning modes without user accounts or centralized progress tracking.",
+      "technologies": [
+        "React",
+        "LocalStorage",
+        "SessionStorage",
+        "IndexedDB",
+        "Project Gutenberg"
+      ]
+    },
+    {
+      "name": "Caregiver Coordination Proof of Concept",
+      "status": "Architecture / planning",
+      "description": "Patient-centered caregiver coordination design emphasizing per-patient isolation, flexible roles and relationships, location and appointment workflows, and HIPAA-aware data segmentation.",
+      "technologies": [
+        "C#",
+        ".NET",
+        "SQL Server",
+        "MySQL",
+        "web application architecture",
+        "HIPAA-aware design"
+      ]
+    }
+  ],
+  "domainExperience": [
+    "Healthcare technology",
+    "Telehealth",
+    "Clinical registries and analytics",
+    "Defense Health Agency and Military Health System",
+    "U.S. Air Force mission systems",
+    "U.S. Army rapid-equipping programs",
+    "Federal contracting",
+    "Business intelligence and reporting",
+    "Enterprise collaboration platforms"
+  ],
+  "notableAchievements": [
+    {
+      "statement": "Delivered secure features for a U.S. Air Force mission platform operating across more than 30 locations.",
+      "metric": {
+        "type": "operationalLocations",
+        "minimum": 30
+      }
+    },
+    {
+      "statement": "Managed a four-person application team for the U.S. Army Rapid Equipping Force.",
+      "metric": {
+        "type": "teamSize",
+        "value": 4
+      },
+      "dateStatus": "approximate timeframe"
+    },
+    {
+      "statement": "Supported Defense Health Agency TBI and opioid registry data workflows and the CarePoint portal."
+    },
+    {
+      "statement": "Modernized legacy .NET applications for Azure PaaS and DevSecOps delivery."
+    }
+  ],
+  "keywordIndex": [
+    "C#",
+    ".NET",
+    ".NET Core",
+    "ASP.NET Core",
+    "SQL Server",
+    "Azure SQL",
+    "React",
+    "TypeScript",
+    "JavaScript",
+    "Node.js",
+    "REST API",
+    "OpenAPI",
+    "Entity Framework Core",
+    "Azure",
+    "Azure DevOps",
+    "CI/CD",
+    "Git",
+    "SharePoint",
+    "SSIS",
+    "Agile",
+    "TDD",
+    "DevSecOps",
+    "healthcare",
+    "DHA",
+    "MHS",
+    "USAF",
+    "U.S. Army",
+    "Secret clearance",
+    "legacy modernization",
+    "cloud migration",
+    "application troubleshooting",
+    "SQL performance tuning"
+  ],
+  "verificationQueue": [
+    {
+      "priority": "high",
+      "field": "employment[0].startDate",
+      "question": "What month and year did employment with Alpha Omega Integrations begin?"
+    },
+    {
+      "priority": "high",
+      "field": "employment[0].title",
+      "question": "Should the canonical Alpha Omega title be Senior SharePoint Developer, Full-Stack Developer, or another official title?"
+    },
+    {
+      "priority": "high",
+      "field": "employment[5].contractEmployers",
+      "question": "Confirm the exact start and end months for Booz Allen, KT Consulting, TSM, and Xator."
+    },
+    {
+      "priority": "medium",
+      "field": "certifications[0]",
+      "question": "Confirm the official Copilot credential name, issuer, award date, credential ID, and verification URL."
+    },
+    {
+      "priority": "medium",
+      "field": "person.contact.websites",
+      "question": "Choose the canonical public portfolio URL."
+    },
+    {
+      "priority": "medium",
+      "field": "skills.dataIntegration",
+      "question": "Confirm the level and recency of hands-on SSIS experience before emphasizing it in targeted resumes."
+    },
+    {
+      "priority": "low",
+      "field": "employment",
+      "question": "Add missing project details, accomplishments, technologies, and measurable outcomes for older positions."
+    }
+  ]
+}
